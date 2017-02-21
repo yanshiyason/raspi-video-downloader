@@ -3,7 +3,7 @@ db = SQLite3::Database.new "youtube.db"
 # Create a table
 rows = db.execute <<-SQL
   CREATE TABLE IF NOT EXISTS videos (
-    id integer
+    id integer,
     video_title varchar(90)
   );
 SQL

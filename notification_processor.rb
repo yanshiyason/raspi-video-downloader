@@ -13,7 +13,7 @@ class NotificationProcessor
     begin
       download_video
       send_mail
-      Video.create!(video_url: url)
+      Video.create!(video_title: video_title)
     rescue Error => e
       return nil
     end
