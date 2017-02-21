@@ -65,14 +65,11 @@ class NotificationProcessor
 
   def send_mail
     return if from.include? 'noreply'
-    Mailer.send(to: from, title: url)
+    Mailer.send(to: from, title: video_title)
   end
 
   def dir_name
-    # py
-    # @dir_name ||= "/mnt/youtube_videos/#{@folder_name}"
-    # mac
-    @dir_name ||= "/Users/yannickchiasson/youtube_downloads/#{folder_name}"
+    @dir_name ||= "#{ENV['ROOT_DOWNLOAD_FOLDER']}/#{@folder_name}"
   end
 
   def folder_name

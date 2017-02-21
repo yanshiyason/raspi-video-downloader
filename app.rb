@@ -17,10 +17,10 @@ require_relative './error'
 require_relative './video'
 require_relative './sns_processor'
 
-# ~/ngrok http --hostname shiyason.ap.ngrok.io -region ap 80
+# ~/ngrok http --hostname shiyason.ap.ngrok.io -region ap 3000
 
 set :bind, '0.0.0.0'
-set :port, 80
+set :port, 3000
 
 post '/' do
   SnsProcessor.new(request).process!
