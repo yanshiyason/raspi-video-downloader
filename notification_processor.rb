@@ -69,7 +69,7 @@ class NotificationProcessor
   end
 
   def dir_name
-    @dir_name ||= "#{ENV['ROOT_DOWNLOAD_FOLDER']}/#{@folder_name}"
+    @dir_name ||= "#{ENV['ROOT_DOWNLOAD_FOLDER']}/#{folder_name}"
   end
 
   def folder_name
