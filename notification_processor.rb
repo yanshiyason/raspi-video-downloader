@@ -82,7 +82,7 @@ class NotificationProcessor
   end
 
   def download!
-    return true if system("youtube-dl -o '#{dir_name}/%(title)s' #{url}")
+    return true if system("youtube-dl -o '#{dir_name}/#{video_title}' #{url}")
     false
   end
 end
