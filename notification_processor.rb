@@ -51,7 +51,7 @@ class NotificationProcessor
   end
 
   def video_title
-    @video_title ||= `youtube-dl --get-filename -o '%(title)s.%(ext)s' #{url} --restrict-filenames`.strip
+    @video_title ||= `youtube-dl --get-filename -o '%(title)s.%(ext)s' #{url}`.strip
   end
 
   def video_found?
