@@ -30,6 +30,7 @@ GEM
     i18n (0.8.0)
     jmespath (1.3.1)
     json (1.8.6)
+    logger (1.2.8)
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
     method_source (0.8.2)
@@ -52,7 +53,6 @@ GEM
       rack-protection (~> 1.4)
       tilt (>= 1.3, < 3)
     slop (3.6.0)
-    sqlite3 (1.3.13)
     thread_safe (0.3.5)
     tilt (2.0.6)
     tzinfo (1.2.2)
@@ -65,11 +65,11 @@ DEPENDENCIES
   activerecord (~> 4.2, >= 4.2.6)
   aws-sdk (~> 2.7, >= 2.7.11)
   dotenv (~> 2.2)
+  logger (~> 1.2, >= 1.2.8)
   mail (~> 2.6, >= 2.6.4)
   pry (~> 0.10.4)
   pry-byebug (~> 3.4, >= 3.4.2)
   sinatra (~> 1.4, >= 1.4.8)
-  sqlite3 (~> 1.3, >= 1.3.13)
 
 BUNDLED WITH
    1.12.5

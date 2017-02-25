@@ -2,8 +2,9 @@ require_relative './mailer'
 
 class NotificationProcessor
 
-  attr_reader :notification
+  attr_reader :notification, :logger
   def initialize(notification)
+    @logger = AppLogger.new
     @notification = notification
     validate
     make_folder
@@ -13,13 +14,17 @@ class NotificationProcessor
     begin
       download_video
       send_mail
-      Video.create!(video_title: video_title)
     rescue Error => e
+      @logger.error(error_message(e))
       return nil
     end
   end
 
   private
+
+  def error_message(e)
+    [e.class, e.message, e.backtrace.join("\n")].join("\n")
+  end
 
   def message
     @message ||= JSON.parse(notification['Message'])
@@ -54,17 +59,19 @@ class NotificationProcessor
   end
 
   def validate
-    raise Error::NoTextFound unless text
-    raise Error::UrlNotFound unless url
-    raise Error::AlreadyDownloaded, "video already downloaded: #{url}" if video_found?
+    raise Error::NoTextFound, 'no text found in email' unless text
+    raise Error::UrlNotFound, 'url not found in email' unless url
+    raise Error::AlreadyDownloaded, "video already downloaded: #{download_path}" if video_found?
   end
 
   def download_video
+    logger.info('Beginning to download video')
     raise Error::DownloadFailed, "couldn't download" unless download!
   end
 
   def send_mail
     return if from.include? 'noreply'
+    logger.info("Sending email to #{from} -- #{video_title}")
     Mailer.send(to: from, title: video_title)
   end
 
@@ -86,7 +93,8 @@ class NotificationProcessor
   end
 
   def download!
-    return true if system("youtube-dl -o '#{dir_name}/#{video_title}' #{url}")
+    logger.info("Trying to download: #{download_path}")
+    return true if system("youtube-dl -o '#{download_path}' #{url}")
     false
   end
 end
