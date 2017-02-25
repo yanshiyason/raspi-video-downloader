@@ -2,7 +2,6 @@
 require 'dotenv'
 require 'sinatra'
 require 'active_record'
-require 'sqlite3'
 require 'pry'
 require 'pry-byebug'
 require 'aws-sdk'

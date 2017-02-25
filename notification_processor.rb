@@ -49,14 +49,14 @@ class NotificationProcessor
     @video_title ||= `youtube-dl --skip-download -e #{url}`.strip
   end
 
-  def video
-    @video ||= Video.find_by(video_title: video_title)
+  def video_found?
+    File.file?(download_path)
   end
 
   def validate
     raise Error::NoTextFound unless text
     raise Error::UrlNotFound unless url
-    raise Error::AlreadyDownloaded, "video already downloaded: #{url}" if video
+    raise Error::AlreadyDownloaded, "video already downloaded: #{url}" if video_found?
   end
 
   def download_video
@@ -74,6 +74,10 @@ class NotificationProcessor
 
   def folder_name
     @folder_name ||= from.split('@').first
+  end
+
+  def download_path
+    "#{dir_name}/#{video_title}"
   end
 
   def make_folder
