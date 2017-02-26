@@ -2,7 +2,8 @@ require_relative './mailer'
 
 class NotificationProcessor
 
-  attr_reader :notification, :logger
+  attr_reader :notification
+
   def initialize(notification)
     @logger = AppLogger.new
     @notification = notification
@@ -21,6 +22,8 @@ class NotificationProcessor
   end
 
   private
+
+  attr_reader :logger
 
   def error_message(e)
     [e.class, e.message, e.backtrace.join("\n")].join("\n")
@@ -51,8 +54,10 @@ class NotificationProcessor
   end
 
   def video_title
-    @video_title ||= `youtube-dl --get-filename -o '%(title)s.%(ext)s' #{url}`.strip
+    @video_title ||= `youtube-dl --get-filename -o '%(title)s.%(ext)s' '#{url}'`.strip
   end
+
+  url = https://www.youtube.com/watch?v=tEPneR3KFK8
 
   def video_found?
     File.file?(download_path)
@@ -94,7 +99,6 @@ class NotificationProcessor
 
   def download!
     logger.info("Trying to download: #{download_path}")
-    return true if system("youtube-dl -o '#{download_path}' #{url}")
-    false
+    system("youtube-dl -o '#{download_path}' '#{url}'")
   end
 end
